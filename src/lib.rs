@@ -65,7 +65,7 @@ pub use config::{Config,PartHandler,EmailBody,Dkim,ContentEncoding,ContentDecode
 ///
 /// }
 /// ```
-fn init(lines:Vec<&str>,config:&Config)->Result<EmailBody,&'static str>{
+pub fn init(lines:Vec<&str>,config:&Config)->Result<EmailBody,&'static str>{
 
     let mut data_started:bool = false;
     let mut boundry_started = false;
