@@ -1,0 +1,26 @@
+[package]
+name = "letterman_email_body_parser"
+version = "1.0.0"
+authors = ["gzbakku <gzbakku@gmail.com>"]
+edition = "2018"
+
+description = "this is a tokio based fast and optimized email body parser and dkim validator."
+homepage = "https://github.com/gzbakku/letterman_email_body_parser"
+repository = "https://github.com/gzbakku/letterman_email_body_parser"
+readme = "README.md"
+keywords = ["smtp","dkim-validator","body","parser","email"]
+categories = ["email", "parser-implementations", "api-bindings","asynchronous"]
+license = "GPL-3.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+base64 = "0.13.0"
+quoted_printable = "0.4.3"
+regex = "1.5.4"
+tokio = { version = "1.8.1", features = ["full"] }
+trust-dns-resolver = "0.20.3"
+openssl = "0.10.30"
+
+# [dev-dependencies]
+# tokio = { version = "1.8.1", features = ["full"] }
