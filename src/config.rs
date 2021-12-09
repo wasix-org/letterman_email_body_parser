@@ -6,10 +6,11 @@ use crate::dkim::init as DkimInit;
 use trust_dns_resolver::config::{ResolverConfig,ResolverOpts};
 use trust_dns_resolver::{AsyncResolver,TokioConnection,TokioConnectionProvider};
 use openssl::pkey::{PKey,Public};
+use std::sync::Arc;
 
-#[derive(Debug)]
+#[derive(Debug,Clone)]
 pub struct Config{
-    pub keys:TokioRwLock<HashMap<String,PKey<Public>>>,
+    pub keys:Arc<TokioRwLock<HashMap<String,PKey<Public>>>>,
     pub boundary_regex:Regex,
     pub keyval_regex:Regex,
     pub feature_regex:Regex,
@@ -61,7 +62,7 @@ impl Config{
         }
 
         return Ok(Config{
-            keys:TokioRwLock::new(HashMap::new()),
+            keys:Arc::new(TokioRwLock::new(HashMap::new())),
             boundary_regex:boundary_regex,
             keyval_regex:keyval_regex,
             feature_regex:feature_regex,
