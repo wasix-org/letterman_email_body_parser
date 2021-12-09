@@ -7,6 +7,7 @@ use trust_dns_resolver::config::{ResolverConfig,ResolverOpts};
 use trust_dns_resolver::{AsyncResolver,TokioConnection,TokioConnectionProvider};
 use openssl::pkey::{PKey,Public};
 
+#[derive(Debug,Clone)]
 pub struct Config{
     pub keys:TokioRwLock<HashMap<String,PKey<Public>>>,
     pub boundary_regex:Regex,
