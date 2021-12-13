@@ -198,7 +198,8 @@ pub fn init(lines:Vec<&str>,config:&Config)->Result<EmailBody,&'static str>{
         Ok(_)=>{
             return Ok(body);
         },
-        Err(_)=>{
+        Err(_e)=>{
+            println!("!!! failed-parse_parts : {:?}",_e);
             return Err("failed-parse_parts");
         }
     }

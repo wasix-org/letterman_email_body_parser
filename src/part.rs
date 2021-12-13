@@ -17,7 +17,8 @@ pub fn init(email:&mut EmailBody)->Result<(),&'static str>{
         
         match parse_part(part,email){
             Ok(_)=>{},
-            Err(_)=>{
+            Err(_e)=>{
+                println!("!!! failed-parse_part : {}",_e);
                 return Err("failed-parse-part");
             }
         }
@@ -39,30 +40,77 @@ fn parse_part(part:Part,email:&mut EmailBody)->Result<(),&'static str>{
             if v.contains("base64"){encoding = ContentEncoding::Base64;} else 
             if v.contains("quoted-printable"){encoding = ContentEncoding::Qp;} else
             if v.contains("qp"){encoding = ContentEncoding::Qp;} else
-            if v.contains("binary"){encoding = ContentEncoding::UnSupported;} else {
-                encoding = ContentEncoding::String;
-            }
+            if v.contains("text"){encoding = ContentEncoding::String;} else
+            if v.contains("string"){encoding = ContentEncoding::String;} else
+            if v.contains("7bit"){encoding = ContentEncoding::String;} else
+            if v.contains("8bit"){encoding = ContentEncoding::String;} else
+            if v.contains("binary"){encoding = ContentEncoding::UnSupported;} 
+            else {encoding = ContentEncoding::String;}
         },
         None=>{
-            encoding = ContentEncoding::String;
+            match email.headers.get("Content-Transfer-Encoding"){
+                Some(v)=>{
+                    let v = v.to_lowercase();
+                    if v.contains("base64"){encoding = ContentEncoding::Base64;} else 
+                    if v.contains("quoted-printable"){encoding = ContentEncoding::Qp;} else
+                    if v.contains("qp"){encoding = ContentEncoding::Qp;} else
+                    if v.contains("text"){encoding = ContentEncoding::String;} else
+                    if v.contains("string"){encoding = ContentEncoding::String;} else
+                    if v.contains("7bit"){encoding = ContentEncoding::String;} else
+                    if v.contains("8bit"){encoding = ContentEncoding::String;} else
+                    if v.contains("binary"){encoding = ContentEncoding::UnSupported;} 
+                    else {encoding = ContentEncoding::String;}
+                },
+                None=>{
+                    encoding = ContentEncoding::String;
+                }
+            }
         }
     }
 
+    
+    let mut is_string = false;
+    if part.content_type.0.len() == 0{
+        if email.content_type.0.len() > 0{
+            if 
+                email.content_type.0.contains("html") || 
+                email.content_type.0.contains("text") || 
+                email.content_type.0.contains("string") || 
+                email.content_type.0.contains("utf-8")
+            {
+                is_string = true;
+            }
+        }
+    } else {
+        if 
+            part.content_type.0.contains("html") || 
+            part.content_type.0.contains("text") || 
+            part.content_type.0.contains("string") || 
+            part.content_type.0.contains("utf-8")
+        {
+            is_string = true;
+        }
+    }
+
+    // println!("encoding : {:?} is_string : {:?} {:?}",encoding,is_string,part.content_type);
+
+    
+    let decoded:ContentDecoded;
     match encoding{
         ContentEncoding::Base64=>{
             match Base64Decode(part.data.clone()){
                 Ok(v)=>{
-                    if part.content_type.0.contains("text"){
+                    if is_string{
                         match String::from_utf8(v){
                             Ok(v)=>{
-                                part.decoded = ContentDecoded::String(v);
+                                decoded = ContentDecoded::String(v);
                             },
                             Err(_)=>{
                                 return Err("failed-parse_base64_to_string");
                             }
                         }
                     } else {
-                        part.decoded = ContentDecoded::Base64(v);
+                        decoded = ContentDecoded::Base64(v);
                     }
                 },
                 Err(_)=>{
@@ -73,17 +121,17 @@ fn parse_part(part:Part,email:&mut EmailBody)->Result<(),&'static str>{
         ContentEncoding::Qp=>{
             match QPDecode(part.data.clone(),QpParseMode::Strict){
                 Ok(v)=>{
-                    if part.content_type.0.contains("text"){
+                    if is_string{
                         match String::from_utf8(v){
                             Ok(v)=>{
-                                part.decoded = ContentDecoded::String(v);
+                                decoded = ContentDecoded::String(v);
                             },
                             Err(_)=>{
                                 return Err("failed-parse_qp_to_string");
                             }
                         }
                     } else {
-                        part.decoded = ContentDecoded::Qp(v);
+                        decoded = ContentDecoded::Qp(v);
                     }
                 },
                 Err(_)=>{
@@ -92,10 +140,31 @@ fn parse_part(part:Part,email:&mut EmailBody)->Result<(),&'static str>{
             }
         },
         ContentEncoding::String=>{
-            part.decoded = ContentDecoded::String(part.data.clone());
-        },
+            decoded = ContentDecoded::String(part.data.clone());
+        }
         ContentEncoding::UnSupported=>{
             return Err("unsupported-content-encoding");
+        }
+    }
+
+    match decoded{
+        ContentDecoded::String(v)=>{
+            if part.content_type.0.len() == 0{
+                if email.content_type.0.contains("html"){
+                    part.decoded = ContentDecoded::Html(v);
+                } else {
+                    part.decoded = ContentDecoded::String(v);
+                }
+            } else {
+                if part.content_type.0.contains("html"){
+                    part.decoded = ContentDecoded::Html(v);
+                } else {
+                    part.decoded = ContentDecoded::String(v);
+                }
+            }
+        },
+        _=>{
+            part.decoded = decoded;
         }
     }
 

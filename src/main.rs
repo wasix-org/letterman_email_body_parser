@@ -8,6 +8,9 @@ pub mod dkim;
 
 //./gl_alt_atch.txt
 //./sldv_atch.txt
+//./sldv_html.txt
+//./sldv_smpl.txt
+//./gl_yt_alt.txt
 //../letterman_tools/emails/sldv_atch.txt
 
 pub use config::{Config,PartHandler,EmailBody,Dkim,ContentEncoding,ContentDecoded,Part};
@@ -15,9 +18,8 @@ pub use config::{Config,PartHandler,EmailBody,Dkim,ContentEncoding,ContentDecode
 #[tokio::main]
 async fn main() {
 
-
     let value:String;
-    match io::read_string("./gl_alt_atch.txt"){
+    match io::read_string("./gl_yt_alt.txt"){
         Ok(v)=>{value = v;},
         Err(_)=>{
             println!("failed-read_file");
@@ -26,6 +28,8 @@ async fn main() {
     }
 
     let hold:Vec<&str> = value.split("\r\n").collect();
+
+    // println!("{:?}",hold);
     
     let conf:Config;
     match Config::new(){
@@ -38,7 +42,7 @@ async fn main() {
 
     match init(hold,&conf){
         Ok(mut email)=>{
-            println!("email body parsed");
+            println!("email body parsed : {:?}",email.body);
             match email.validate(&conf).await{
                 Ok(_)=>{
                     println!("email validated");
@@ -242,7 +246,8 @@ fn init(lines:Vec<&str>,config:&Config)->Result<EmailBody,&'static str>{
         Ok(_)=>{
             return Ok(body);
         },
-        Err(_)=>{
+        Err(_e)=>{
+            println!("!!! failed-parse_parts : {:?}",_e);
             return Err("failed-parse_parts");
         }
     }

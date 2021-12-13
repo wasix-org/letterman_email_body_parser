@@ -99,7 +99,7 @@ pub enum ContentEncoding{
 
 #[derive(Debug,Clone)]
 pub enum ContentDecoded{
-    Base64(Vec<u8>),Qp(Vec<u8>),String(String),None
+    Base64(Vec<u8>),Qp(Vec<u8>),String(String),Html(String),None
 }
 
 #[derive(Debug,Clone)]
@@ -146,7 +146,15 @@ impl PartHandler{
     pub fn content_feature(&mut self,key:String,value:String){
         self.active.content_features.insert(key,value);
     }
-    pub fn data(&mut self,v:String){self.active.data.push_str(&v);}
+    pub fn data(&mut self,v:String){
+        if self.active.data.len() == 0{
+            self.active.data.push_str(&v);
+        } else {
+            self.active.data.push_str("\n");
+            self.active.data.push_str(&v);
+        }
+        // self.active.data.push_str(&v);
+    }
     pub fn new()->PartHandler{
         PartHandler{
             finished:Vec::new(),
@@ -203,7 +211,8 @@ impl EmailBody{
             Ok(_)=>{
                 return Ok(());
             },
-            Err(_)=>{
+            Err(_e)=>{
+                println!("!!! failed-parse_parts {:?}",_e);
                 return Err("failed-parse_parts");
             }
         }
