@@ -31,8 +31,6 @@ pub fn init(email:&mut EmailBody)->Result<(),&'static str>{
 
 fn parse_part(mut part:Part,email:&mut EmailBody)->Result<(),&'static str>{
 
-    let mut part = part;
-
     let encoding:ContentEncoding;
     match part.content_features.get("Content-Transfer-Encoding"){
         Some(v)=>{
