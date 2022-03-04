@@ -147,6 +147,7 @@ impl PartHandler{
         self.active.content_features.insert(key,value);
     }
     pub fn data(&mut self,v:String){
+        // println!("\n\n{:?}\n\n",v);
         if self.active.data.len() == 0{
             self.active.data.push_str(&v);
         } else {

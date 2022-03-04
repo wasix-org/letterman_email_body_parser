@@ -6,11 +6,13 @@ mod parser;
 mod part;
 pub mod dkim;
 
+//./ge_html.txt
 //./gl_alt_atch.txt
 //./sldv_atch.txt
 //./sldv_html.txt
 //./sldv_smpl.txt
 //./gl_yt_alt.txt
+//./sldv_alt_atch_pipe.txt
 //../letterman_tools/emails/sldv_atch.txt
 
 pub use config::{Config,PartHandler,EmailBody,Dkim,ContentEncoding,ContentDecoded,Part};
@@ -19,7 +21,7 @@ pub use config::{Config,PartHandler,EmailBody,Dkim,ContentEncoding,ContentDecode
 async fn main() {
 
     let value:String;
-    match io::read_string("./gl_yt_alt.txt"){
+    match io::read_string("./ge_html_wwe.txt"){
         Ok(v)=>{value = v;},
         Err(_)=>{
             println!("failed-read_file");
@@ -42,7 +44,7 @@ async fn main() {
 
     match init(hold,&conf){
         Ok(mut email)=>{
-            println!("email body parsed : {:?}",email.body);
+            // println!("email body parsed : {:?}",email);
             match email.validate(&conf).await{
                 Ok(_)=>{
                     println!("email validated");

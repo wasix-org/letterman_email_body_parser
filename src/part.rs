@@ -29,7 +29,7 @@ pub fn init(email:&mut EmailBody)->Result<(),&'static str>{
 
 }
 
-fn parse_part(part:Part,email:&mut EmailBody)->Result<(),&'static str>{
+fn parse_part(mut part:Part,email:&mut EmailBody)->Result<(),&'static str>{
 
     let mut part = part;
 
@@ -98,11 +98,19 @@ fn parse_part(part:Part,email:&mut EmailBody)->Result<(),&'static str>{
     let decoded:ContentDecoded;
     match encoding{
         ContentEncoding::Base64=>{
+            while part.data.contains("\r\n"){
+                part.data = part.data.replace("\r\n","");
+            }
+            while part.data.contains("\n"){
+                part.data = part.data.replace("\n","");
+            }
+            // println!("\n\n{:?}\n\n",part.data);
             match Base64Decode(part.data.clone()){
                 Ok(v)=>{
                     if is_string{
                         match String::from_utf8(v){
                             Ok(v)=>{
+                                // println!("{:?}",v);
                                 decoded = ContentDecoded::String(v);
                             },
                             Err(_)=>{

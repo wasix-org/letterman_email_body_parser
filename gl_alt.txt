@@ -1,0 +1,79 @@
+Delivered-To: gzbakku@gmail.com
+Received: by 2002:a05:6214:411c:0:0:0:0 with SMTP id kc28csp3237924qvb;
+        Sun, 19 Dec 2021 08:03:29 -0800 (PST)
+X-Received: by 2002:a63:bf4a:: with SMTP id i10mr11246489pgo.196.1639929809241;
+        Sun, 19 Dec 2021 08:03:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1639929809; cv=none;
+        d=google.com; s=arc-20160816;
+        b=ZyTMjuVmdVjeikeeaKr21N+XXZzPFx2jSOMmast+PpaHLWRssrRSuwBVS3OUHwFFW8
+         bNWuyW5P0Wx9nRPYQokbhEkvP0vOCGL30YRVwUXQCNxBhEXf0mfkD42mjhfKAXft8v/c
+         Gvhj+B1v0dSTjuykwuLNF2G763kLvoBOlFp3bP+zRI+tbIbdbgLKUCSNtmbJ3/SkI+G0
+         qmMSQIeerIb2H/uNACusOMJ9Y98Jv7m2JYu18sBFmKaxZtGwJFpL4+kEdYeiZbeimRzc
+         FpPuGojJkVMY+QXyPGCjghx571P4A7utL9roMCQR+W8qEDfUMBMLVoQKDovC6808pH/T
+         NwqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=Dg7qRCXQH7ZniiCaY77TT7eR2kVtt+839fx05LCuUrk=;
+        b=wABGY3y1Z2OJhqwhteUSJ9cpZmPRdUPACt9hv8t1m9S9PmnEfF83kUdY2aWu4G+FRf
+         G+mBXK8cdprGClTUQsa5CtK5OFJvuv6DhqYbDlBca8YT5t9AumCpy+pgazV0Q3JlPQkv
+         nwNzQlqraoF9M6UW5Xol5Uw+rLrdLucmYxcrizmVxLrmtOkBgIJd274UBbdvLDT8ULMT
+         HMfNTFLiQPQ/GnrHNAvarRD9gqTrEWHZbBAqFaXOddy/S0zOr8CQFqd6p/KYPyUgfjvk
+         DtixMGzqmIbhyI54EaUhSr6GdLZ4Sqbm8SOsGNnZLBU7i+LOrIEA66/WzKOdUCA+zC88
+         JWDw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20210112 header.b=jWRMvwRM;
+       spf=pass (google.com: domain of autovanzawork1@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=autovanzawork1@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
+Return-Path: <autovanzawork1@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id k3sor4379681plc.4.2021.12.19.08.03.29
+        for <gzbakku@gmail.com>
+        (Google Transport Security);
+        Sun, 19 Dec 2021 08:03:29 -0800 (PST)
+Received-SPF: pass (google.com: domain of autovanzawork1@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20210112 header.b=jWRMvwRM;
+       spf=pass (google.com: domain of autovanzawork1@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=autovanzawork1@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Dg7qRCXQH7ZniiCaY77TT7eR2kVtt+839fx05LCuUrk=;
+        b=jWRMvwRMYZdGcdxYAqeBRh48TpuN3Q3uokM3bEMbdWTWb7oAnjgpEuEkLx5aESi7GT
+         TUxcdAK7KD2DvpbULuBCj8+U2mCtiaaiAx1PXrHQbGywqeS9KzpHPQJcGEQKlkq7yyCz
+         NaoE5PoE2n6dGDAXIh7oi6BY5ffdqyD6ERzHdz7s5PWLdHsDh3wNfcicgCrMp+9nJtSt
+         9Y+452tbHhz7zWEJ14rJaa4TmAfZs6OzBq6u5sz+x7LaamaiRaGfV56SCbhlpT7Wg5g4
+         YURVU/xPHmAHlPurjNjAY4/etSvnh61Mlcu7kwHo5NrbGIvHnMt8P29GG+F9U6TupzVX
+         gN6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Dg7qRCXQH7ZniiCaY77TT7eR2kVtt+839fx05LCuUrk=;
+        b=10WNcwpNFGQRv247AtYX4vqm4spowTFTc1p7LC9P/fQv1Xf2+iLhpmx8rX95WXbvJA
+         4nmkv4vnNG4HHDQjNTayLPgq9P9xLKG/p002Nn59TGoNDcYrGKUSz3jCzosQ73M9IFIx
+         od9BVP87KrXCdBvbYi5PWyOfwEmSe4ilDEf31SXa05kkEA0eY+NTkPHWZRSsaqXxKiM8
+         +KqC25Sie3fgpM2LuO1bR/jJjRQF84TXFOLYQk9mVl3s8sBP7mV6N4CnaszopDM+GYvN
+         zuMan3CVSP/el/dcuXSf1Hpb+t8LYT/zLI8VLKYFUEnhRjDagYuqNYzSeH0fIzbKvRv5
+         oQUw==
+X-Gm-Message-State: AOAM5302PWTPQkrtB+aDlmtlrhLLKPEh8LX+Lu7QvuQbRrfM15tb1rEW zSaD7hH2iPDRFX2dWAtfp8FCc67xVGdbGIrPTeJQMAn0wiA=
+X-Google-Smtp-Source: ABdhPJy+KmXxxLH+uwL7sR7cVCfHfTDOLC70rlKGzCEmWTK5ofuFRmTz0kr7pPx6+ZfwGV193hO/SaSUdWINsFK3Ebw=
+X-Received: by 2002:a17:903:408c:b0:148:f08f:d407 with SMTP id z12-20020a170903408c00b00148f08fd407mr7852122plc.79.1639929808599; Sun, 19 Dec 2021 08:03:28 -0800 (PST)
+MIME-Version: 1.0
+From: node head <autovanzawork1@gmail.com>
+Date: Sun, 19 Dec 2021 21:33:20 +0530
+Message-ID: <CABWVUd7QCNy0E_doxPc=LN8Dwmzfr-AYp+6kWhLOgCdrOHqUtQ@mail.gmail.com>
+Subject: king one
+To: gzbakku@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000b2be9a05d381e958"
+
+--000000000000b2be9a05d381e958
+Content-Type: text/plain; charset="UTF-8"
+
+dynamic duo
+
+--000000000000b2be9a05d381e958
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr">dynamic duo<br></div>
+
+--000000000000b2be9a05d381e958--

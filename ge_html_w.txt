@@ -1,0 +1,22 @@
+From:akku <akku@gzbemail.xyz>
+Message-ID: <BjV8m0fiKAjU7XJ2snVs7TgszCrCaVlh.smtp.gzbemail.xyz@dkimvalidator.com>
+Date: Wed, 23 Feb 2022 12:57:27 +0000
+Subject: hello world
+To: wh7ph3ug6fmoaq@dkimvalidator.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gzbemail.xyz; s=dkim; h=from:message-id:date:subject:to; bh=YRabQutOg2LnFMGwI6fsbEQNHf1VM0dzSrJSDasYG5A=; b=PWLZs7Wq7pRNoDdeO734eVfmLoheCfnU1WfEEV3wlN2ZHqPMN5AuuY6533tBB7qr+hxYJeQ3bPfdvXU495VUFcaYI2svrayf40/2t8CZDHFE3bJopvw+1pKf+GAkJrK/F/zwH44bURRbXwLrW6/SwRU+WDFVhqypGWJ70tk4pibAmvEcuTk4h9ir2gm8eHTJzqN3mHv/AyUYbjGXHaBfZR7cOMkZ0Z5QqyUWr6A9aK15cAvVMIwLyBfKm5ruqaKX5ztyi7a4NlwEzs+/EwBeN01Sikqbu/g186EhTD8Wt/x9ECaLUkPCf7Nm/y6BWZmAmNp8EHG1YrAcZlqRZi0c0w==
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="000000000000dbc95d05d2847225"
+
+--000000000000dbc95d05d2847225
+Content-Type: text/plain; charset="UTF-8"
+
+first message
+second message
+third message
+--000000000000dbc95d05d2847225
+Content-Type: text/html; charset="UTF-8"
+
+<html> <header><title>This is title</title></header> <body> <h1>Hello world</h1> </body> </html>
+--000000000000dbc95d05d2847225--
+
+.

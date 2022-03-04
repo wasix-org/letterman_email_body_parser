@@ -10,7 +10,8 @@ pub async fn init(email:&mut EmailBody,config:&Config)->Result<(),&'static str>{
 
     match check_basic_validation(email){
         Ok(_)=>{},
-        Err(_)=>{
+        Err(_e)=>{
+            println!("!!! basic-validation-failed : {:?}",_e);
             return Err("basic-validation-failed");
         }
     }
@@ -26,6 +27,8 @@ pub async fn init(email:&mut EmailBody,config:&Config)->Result<(),&'static str>{
             return Err("failed-dkim_verification_string");
         }
     }
+
+    // println!("\n\n{:?}\n\n",dkim_verification_string);
 
     let signature_string:String;
     match email.dkim.features.get("b"){
@@ -213,6 +216,8 @@ pub async fn get_dkim_sender_key(config:&Config,key_name:&String)->Result<PKey<P
         key = format!("-----BEGIN PUBLIC KEY-----\n{}\n-----END PUBLIC KEY-----",key);
     }
 
+    // println!("\n{}\n",key);
+
     let private_key:PKey<Public>;
     match PKey::public_key_from_pem(&key.into_bytes()){
         Ok(k)=>{
@@ -290,16 +295,18 @@ pub fn get_dkim_signature_string(email:&mut EmailBody)->Result<String,&'static s
 
 pub fn check_basic_validation(email:&mut EmailBody)->Result<(),&'static str>{
 
+    // println!("headers : {:?}",email.headers);
+
     if !email.headers.contains_key("to"){
         return Err("not_found-to-header");
     }
 
     if !email.headers.contains_key("from"){
-        return Err("not_found-to-header");
+        return Err("not_found-from-header");
     }
 
     if !email.headers.contains_key("subject"){
-        return Err("not_found-to-header");
+        return Err("not_found-subject-header");
     }
 
     return Ok(());
